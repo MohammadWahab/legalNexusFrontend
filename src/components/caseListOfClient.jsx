@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-const ClientNotification = (props) => {
-  const handleHomePage = () => {
-    props.history.push("/client/profile");
-  };
+const ClientCaseList = (props) => {
   return (
     <div>
-      {" "}
       {/* Navbar */}
       <nav className="navbar navbar-dark bg-success  mb-5 p-3">
         <div className="container">
@@ -47,7 +43,7 @@ const ClientNotification = (props) => {
       <div className="container">
         <div className="row mb-5">
           <div className="col-12 d-flex justify-content-center bg-success bg-opacity-75 p-5 ">
-            Name Of The Client
+            Case List is given below
           </div>
         </div>
         <div className="row">
@@ -55,16 +51,11 @@ const ClientNotification = (props) => {
             <div class="card">
               <div class="card-header">Featured</div>
               <ul class="list-group list-group-flush">
-                <li
-                  class="list-group-item p-5 "
-                  role="button"
-                  onClick={handleHomePage}
-                >
+                <li class="list-group-item p-5 " role="button">
                   Home page
                 </li>
-
                 <li class="list-group-item p-5" role="button">
-                  Find Attorney
+                  Upocoming Meeting
                 </li>
                 <li class="list-group-item p-5" role="button">
                   Documents
@@ -76,79 +67,102 @@ const ClientNotification = (props) => {
             <table class="table table-striped table-info">
               <thead>
                 <tr>
-                  {/* <th scope="col">Case ID</th>
+                  <th scope="col">Case ID</th>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Check details</th> */}
+                  <th scope="col">Check details</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  {/* <th scope="row">1</th>
+                  <th scope="row">1</th>
                   <td>Mark</td>
                   <td>Otto</td>
                   <td>@mdo</td>
                   <td>
                     <button className="btn btn-primary">CHECK</button>
-                  </td> */}
-                  <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">4</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">5</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">6</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">7</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">8</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">9</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">10</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
                   <td>
-                    Mohammd Abdul Wahab has accepted your request to be your
-                    attorney
+                    <button className="btn btn-primary">CHECK</button>
                   </td>
                 </tr>
               </tbody>
@@ -172,4 +186,4 @@ const ClientNotification = (props) => {
   );
 };
 
-export default ClientNotification;
+export default ClientCaseList;

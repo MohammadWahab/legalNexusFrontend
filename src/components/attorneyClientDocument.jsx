@@ -83,6 +83,14 @@ const AttorneyClientDocument = (props) => {
                     id="formFileMultiple"
                     multiple
                   />
+                  <p>
+                    <select class="form-select" id="formFileMultiple">
+                      <option selected>Choose...</option>
+                      <input type="file" id="formFileMultiple" />
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </p>
                 </div>
               </div>
             </div>

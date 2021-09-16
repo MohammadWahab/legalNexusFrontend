@@ -1,5 +1,9 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 const AttorneyMeeting = (props) => {
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <div>
       {/* Navbar */}
@@ -65,18 +69,30 @@ const AttorneyMeeting = (props) => {
               </div>
             </div>
           </div>
+          {/* second part */}
           <div className="col-4">
             <div class="card">
-              <h5 class="card-header">Add Credential</h5>
+              <h5 class="card-header">Meeting Time setup</h5>
               <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </p>
-                <a href="#" class="btn btn-primary">
-                  Go somewhere
-                </a>
+                <div>
+                  <div>
+                    <p className="mx-3 fs-4 text-secondary">Date & Time</p>
+                  </div>
+                  <DatePicker
+                    className="p-2 m-3 rounded"
+                    selected={selectedDate}
+                    onChange={(date) => setSelectedDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                    filterDate={(date) =>
+                      date.getDay() != 6 && date.getDay() != 0
+                    }
+                    isClearable
+                    showYearDropdown
+                    scrollableMonthYearDropdown
+                    showTimeSelect
+                    dateFormat="Pp"
+                  />
+                </div>
               </div>
             </div>
           </div>

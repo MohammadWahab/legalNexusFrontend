@@ -14,7 +14,7 @@ const AttorneyProfile = (props) => {
   };
 
   const handleClientList = () => {
-    props.history.push("/client/list");
+    props.history.push("/case/list/attorney");
   };
 
   const handleNotification = () => {
@@ -92,7 +92,7 @@ const AttorneyProfile = (props) => {
                   className="btn-primary mt-5 "
                   onClick={handleClientList}
                 >
-                  Clients List
+                  Case List
                 </button>
               </div>
             </div>

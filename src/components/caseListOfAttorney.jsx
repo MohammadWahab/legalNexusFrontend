@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-const ClientList = (props) => {
-  const handleHomePage = () => {
-    props.history.push("/attorney/profile");
-  };
-
-  const handleCredential = () => {
-    props.history.push("/attorney/credential");
-  };
+const AttorneyCaseList = (props) => {
   return (
     <div>
       {/* Navbar */}
@@ -50,7 +43,7 @@ const ClientList = (props) => {
       <div className="container">
         <div className="row mb-5">
           <div className="col-12 d-flex justify-content-center bg-success bg-opacity-75 p-5 ">
-            Name Of The Attorney
+            Case List is given below
           </div>
         </div>
         <div className="row">
@@ -58,19 +51,8 @@ const ClientList = (props) => {
             <div class="card">
               <div class="card-header">Featured</div>
               <ul class="list-group list-group-flush">
-                <li
-                  class="list-group-item p-5 "
-                  role="button"
-                  onClick={handleHomePage}
-                >
+                <li class="list-group-item p-5 " role="button">
                   Home page
-                </li>
-                <li
-                  class="list-group-item p-5"
-                  role="button"
-                  onClick={handleCredential}
-                >
-                  Credentials
                 </li>
                 <li class="list-group-item p-5" role="button">
                   Upocoming Meeting
@@ -204,4 +186,4 @@ const ClientList = (props) => {
   );
 };
 
-export default ClientList;
+export default AttorneyCaseList;
