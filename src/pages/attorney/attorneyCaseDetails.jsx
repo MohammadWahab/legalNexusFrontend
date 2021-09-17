@@ -112,7 +112,7 @@ const AttorneyCaseDetails = (props) => {
         </div>
         <div className="card text-center mb-5">
           <div className="card-header">Case Attachments</div>
-          <div className="card-body d-flex justify-content-between">
+          <div className="card-body">
             <div className="row">
               {caseDocuments.map((c) => (
                 <div className="card text-center col-4">

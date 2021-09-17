@@ -3,3 +3,6 @@
   background-size: cover;
   height: auto;
 }
+.form-control{
+  background: rgba(255,255,255, 0.6) !important
+}

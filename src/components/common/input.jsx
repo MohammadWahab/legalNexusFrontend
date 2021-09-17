@@ -8,8 +8,9 @@ const Input = (props) => {
         onChange={props.onChange}
         name={props.name}
         id={props.name}
-        type="text"
+        type={props.type}
         className="form-control"
+        required={props.required?true : false}
       />
     </div>
   );

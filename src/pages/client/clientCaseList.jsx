@@ -1,5 +1,27 @@
+import React, { Component, useEffect, useState } from "react";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 import ClientLayout from "../../layouts/clientLayout";
+import { Link } from "react-router-dom";
+
+
 const ClientCaseList = (props) => {
+  const [cases, setCases] = useState([])
+  useEffect(() => {
+    const user = jwtDecode(localStorage.getItem('token'))
+    const caseList = async () => {
+      try {
+        const result = await axios.get(
+          `http://localhost:8000/client/${user.id}/created/cases`
+        );
+        console.log(result.data);
+        setCases(result.data);
+      } catch (err) {
+        throw err;
+      }
+    };
+    caseList();
+  }, []);
   const handleCheckDetails = () => {
     props.history.push("/client/case/details");
   };
@@ -19,146 +41,34 @@ const ClientCaseList = (props) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">6</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">7</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">8</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">9</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">10</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleCheckDetails}
-                >
-                  CHECK
-                </button>
-              </td>
-            </tr>
+          {cases.map((c) => {
+              return (
+                <tr>
+                  <th scope="row">{c.id}</th>
+                  <td>{c.first_name}</td>
+                  <td>{c.last_name}</td>
+                  <td>{c.email}</td>
+                  <td>
+                    <Link
+                      to={{
+                        pathname: "/client/case/details",
+                        state: {
+                          caseId: c.id,
+                          caseState: c.case_state,
+                          startDate: c.start_date,
+                          firstName: c.first_name,
+                          lastName: c.last_name,
+                          clientId: c.client_id,
+                          attorneyId: c.attorney_id,
+                        },
+                      }}
+                    >
+                      CHECK
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         <div className="d-flex justify-content-center">

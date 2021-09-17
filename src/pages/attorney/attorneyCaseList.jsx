@@ -2,6 +2,7 @@ import AttorneyLayout from "../../layouts/attorneyLayout";
 import axios from "axios";
 import React, { Component, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 const AttorneyCaseList = (props) => {
   const [cases, setCases] = useState([]);
@@ -11,10 +12,11 @@ const AttorneyCaseList = (props) => {
   };
 
   useEffect(() => {
+    const user = jwtDecode(localStorage.getItem('token'))
     const caseList = async () => {
       try {
         const result = await axios.get(
-          "http://localhost:8000/test/created/cases"
+          `http://localhost:8000/attorney/${user.id}/created/cases`
         );
         console.log(result.data);
         setCases(result.data);

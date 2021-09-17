@@ -1,9 +1,73 @@
 import ClientLayout from "../../layouts/clientLayout";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import jwtDecode from "jwt-decode";
+import axios from "axios";
+
+
 const ClientCaseDetails = (props) => {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [caseState, setCaseState] = useState({});
+  const [clientName, setClientName] = useState("");
+  const [attorneyName, setAttorneyName] = useState("");
+  const [caseDocuments, setCaseDocuments] = useState([]);
+  const [file, setFile] = useState(null);
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log(props.location.state.caseId);
+    try {
+      const res = await axios.post(
+        `http://localhost:8000/case/upload/documents/${props.location.state.caseId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+
+  useEffect(() => {
+    console.log(props.location.state);
+    setCaseState(props.location.state);
+    const fullName = [
+      props.location.state.firstName,
+      " ",
+      props.location.state.lastName,
+    ].join(" ");
+    setClientName(fullName);
+    console.log(clientName);
+
+    const jwt = localStorage.getItem("token");
+    const user = jwtDecode(jwt);
+
+    const attorneyFullName = [user.first_name, " ", user.last_name].join(" ");
+    setAttorneyName(attorneyFullName);
+
+    const caseDocs = async () => {
+      const res = await axios.get(
+        `http://localhost:8000/case/documents/${props.location.state.caseId}`
+      );
+      console.log(res.data);
+      setCaseDocuments(res.data);
+    };
+    caseDocs();
+  }, []);
+
+
   return (
     <ClientLayout>
       <div>
@@ -13,25 +77,25 @@ const ClientCaseDetails = (props) => {
             <div className="card  text-center w-25">
               <div className="card-body p-5">
                 <h5 className="card-title">State</h5>
-                <p>OPEN</p>
+                <p>{caseState.caseState}</p>
               </div>
             </div>
             <div className="card text-center w-25">
               <div className="card-body mt-4">
                 <h5 className="card-title mb-3">Start Date</h5>
-                <p>2021/08/24</p>
+                <p>{caseState.startDate}</p>
               </div>
             </div>
             <div className="card text-center w-25">
               <div className="card-body mt-4">
                 <h5 className="card-title">Client</h5>
-                <p>Mohammad Maruf Islam</p>
+                <p>{clientName}</p>
               </div>
             </div>
             <div className="card text-center w-25">
               <div className="card-body mt-4">
                 <h5 className="card-title">Attorney</h5>,
-                <p>Mohammad Abdul Wahab</p>
+                <p>{attorneyName}</p>
               </div>
             </div>
           </div>
@@ -39,29 +103,18 @@ const ClientCaseDetails = (props) => {
         </div>
         <div className="card text-center mb-5">
           <div className="card-header">Case Attachments</div>
-          <div className="card-body d-flex justify-content-between">
-            <div className="card  text-center">
-              <div className="card-body mt-4">
-                <h5 className="card-title">Document-01</h5>
-                <p>2021/08/25</p>
-              </div>
-            </div>
-            <div className="card text-center">
-              <div className="card-body mt-4">
-                <h5 className="card-title mb-3">Document-02</h5>
-                <p>2021/08/25</p>
-              </div>
-            </div>
-            <div className="card text-center">
-              <div className="card-body mt-4">
-                <h5 className="card-title">Document-03</h5>
-                <p>2021/08/25</p>
-              </div>
-            </div>
-            <div className="card text-center">
-              <div className="card-body mt-4">
-                <h5 className="card-title">Document-04</h5>,<p>2021/08/29</p>
-              </div>
+          <div className="card-body">
+            <div className="row">
+              {caseDocuments.map((c) => (
+                <div className="card text-center col-4">
+                  <div className="card-body mt-4">
+                    <h5 className="card-title mb-3">Document</h5>
+                    <p>
+                      <a href={`http://localhost:8000/${c.document}`}>Check</a>
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <div className="card-footer text-muted"></div>
@@ -144,26 +197,24 @@ const ClientCaseDetails = (props) => {
               <h5 className="card-header">Upload Document</h5>
               <div className="card-body">
                 <div className="mb-5">
-                  <label
-                    for="formFileMultiple"
-                    className="form-label fs-4 fw-bold"
-                  >
-                    Upload File
-                  </label>
-                  <input
-                    className="form-control border-1"
-                    type="file"
-                    id="formFileMultiple"
-                    multiple
-                  />
-                  <p>
-                    <select class="form-select" id="formFileMultiple">
-                      <option selected>Choose...</option>
-                      <input type="file" id="formFileMultiple" />
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </p>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                      <label htmlFor="formFileLg" className="form-label">
+                        upload your file
+                      </label>
+                      <input
+                        className="form-control form-control-lg"
+                        id="formFileLg"
+                        type="file"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <input
+                      type="submit"
+                      value="Upload"
+                      className="btn btn-primary btn-block mt-4"
+                    />
+                  </form>
                 </div>
               </div>
             </div>

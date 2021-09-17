@@ -51,12 +51,11 @@ const Login = (props) => {
   };
 
   return (
-    <div class="container img">
-      <div className="row align-items-center vh-100">
-        <div className="col-4"></div>
-        <div className="col-4 card bg-secondary">
+    <div class=" img">
+      <div className="container row align-items-center vh-100 mx-auto">
+        <div className="col-4 card mx-auto" style={{background: 'rgba(108, 117, 125, 0.4)'}}>
           <div className="card-body mt-4">
-            <h5 class="card-title fs-3 text-white">Login</h5>
+            <h5 class="card-title fs-3 text-white text-center">Login</h5>
             <form className="text-light fs-4" onSubmit={handleSubmit}>
               <div className="form-group">
                 <Input
@@ -76,12 +75,12 @@ const Login = (props) => {
                   name="password"
                   label="Password"
                   id="password"
-                  type="text"
+                  type="password"
                   className="form-control"
                 />
               </div>
               <button className="btn btn-primary">LOGIN</button>
-              <div className="pt-4 mb-2">
+              <div className="pt-4 mb-2 d-flex">
                 <button
                   className="btn btn-outline-warning me-2"
                   onClick={handleSignUp}
@@ -98,7 +97,6 @@ const Login = (props) => {
             </form>
           </div>
         </div>
-        <div className="col-4"></div>
       </div>
     </div>
   );
