@@ -1,6 +1,50 @@
 import AdminLayout from "../../layouts/adminLayout";
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
+import axios from "axios";
+import userEvent from "@testing-library/user-event";
 const AdminClientList = (props) => {
+  const [clients, setClients] = useState([]);
+
+  const [value, setValue] = useState();
+
+  const refresh = () => {
+    // it re-renders the component
+    setValue({});
+  };
+
+  const handleAction = (c) => {
+    if (c.is_permitted) {
+      c.is_permitted = false;
+    } else {
+      c.is_permitted = true;
+    }
+
+    const takeAdministritiveAction = async () => {
+      const postBody = {
+        is_permitted: c.is_permitted,
+      };
+      const updateUser = await axios.post(
+        `http://localhost:8000/admin/action/${c.id}`,
+        postBody
+      );
+      console.log(updateUser.data);
+      if (updateUser.data) {
+        refresh();
+      }
+    };
+    takeAdministritiveAction();
+  };
+
+  useEffect(() => {
+    const getClient = async () => {
+      const result = await axios.get(
+        `http://localhost:8000/admin/summon/client`
+      );
+      //console.log(result.data);
+      setClients(result.data);
+    };
+    getClient();
+  }, []);
   return (
     <AdminLayout>
       <table class="table">
@@ -9,13 +53,38 @@ const AdminClientList = (props) => {
             <th scope="col">Client ID</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
-            <th scope="col">Total Engagement</th>
             <th scope="col">Status</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {clients.map((c) => (
+            <tr>
+              <th scope="row">{c.id}</th>
+              <td>{`${c.first_name} ${c.last_name}`}</td>
+              <td>{c.email}</td>
+              <td className={c.is_permitted ? "" : "text-danger"}>
+                {c.is_permitted ? "Active" : "Restricted"}
+              </td>
+              <td className="d-flex">
+                <button
+                  className="btn btn-success me-1"
+                  disabled={c.is_permitted}
+                  onClick={() => handleAction(c)}
+                >
+                  Activate
+                </button>
+                <button
+                  className="btn btn-danger ms-1"
+                  disabled={!c.is_permitted}
+                  onClick={() => handleAction(c)}
+                >
+                  Restrict
+                </button>
+              </td>
+            </tr>
+          ))}
+          {/* <tr>
             <th scope="row">1</th>
             <td>Wahab</td>
             <td>Wahab@gamil.com</td>
@@ -69,7 +138,7 @@ const AdminClientList = (props) => {
               <button className="btn btn-success me-1">Activate</button>
               <button className="btn btn-danger ms-1">Restrict</button>
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
       {/* pagination */}
